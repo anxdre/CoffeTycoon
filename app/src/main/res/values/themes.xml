@@ -1,0 +1,53 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.CoffeTycoon" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/disabled_gray</item>
+        <item name="colorPrimaryVariant">@color/black_brown</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/dark_brown</item>
+        <item name="colorSecondaryVariant">@color/brown</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorSecondary</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/noto_sans</item>
+        <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="outlineInputText" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="strokeColor">@color/white</item>
+        <item name="boxStrokeColor">@color/color_white_selector</item>
+        <item name="hintTextColor">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:colorAccent">@color/white</item>
+    </style>
+
+    <style name="outlineInputText.Rounded" parent="outlineInputText">
+        <item name="boxCornerRadiusBottomStart">@dimen/margin_large</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/margin_large</item>
+        <item name="boxCornerRadiusTopStart">@dimen/margin_large</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/margin_large</item>
+    </style>
+
+    <style name="textDefault" parent="">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="textTitle" parent="">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textSubTitle" parent="">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textSmallTitle" parent="">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
