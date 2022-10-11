@@ -10,6 +10,7 @@
         android:id="@+id/iv_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="visible"
         android:src="@drawable/bg_curved"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +34,7 @@
         android:layout_marginHorizontal="@dimen/margin_huge"
         android:background="@drawable/bg_white_curved"
         android:padding="@dimen/margin_small"
+        android:visibility="gone"
         android:text="Waroeng Kopi"
         android:textAlignment="center"
         android:textColor="@color/black_brown"
@@ -98,15 +100,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/horizontal_page_margin"
-        android:layout_marginTop="@dimen/margin_large"
         android:paddingVertical="@dimen/horizontal_page_inner_padding"
+        android:layout_marginBottom="@dimen/margin_medium"
         android:text="Buka Toko"
         android:textSize="18sp"
         android:textStyle="bold"
         app:backgroundTint="?colorSecondaryVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ti_password" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"

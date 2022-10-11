@@ -1,15 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android-extensions'
 }
 
 android {
     namespace 'com.anxdre.coffetycoon'
     compileSdk 33
-
-    buildFeatures{
-        viewBinding true
-    }
 
     defaultConfig {
         applicationId "com.anxdre.coffetycoon"
