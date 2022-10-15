@@ -13,6 +13,20 @@
         android:theme="@style/Theme.CoffeTycoon"
         tools:targetApi="31">
         <activity
+            android:name=".ui.sellevent.SellEventActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.preparecoffee.PrepareCoffeeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.mainmenu.MainMenuActivity"
             android:exported="false">
             <meta-data

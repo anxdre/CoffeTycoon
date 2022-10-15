@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_curved"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_32dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv"
+        style="@style/textSmallTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Konfirmasi data penjualan"
+        android:textColor="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_message_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="message"
+        android:layout_marginVertical="@dimen/dimen_8dp"
+        android:padding="@dimen/dimen_8dp"
+        android:textColor="@color/disabled_gray"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_price_confirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:layout_marginBottom="@dimen/dimen_8dp"
+        android:hint="Masukkan harga jual"
+        android:paddingHorizontal="@dimen/dimen_8dp"
+        android:textColor="@color/black"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel_confirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorPrimary"
+            android:text="Tidak"
+            android:layout_gravity="end"
+            app:cornerRadius="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            app:fontFamily="@font/noto_sans_bold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_continue_confirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="?colorSecondaryVariant"
+            android:text="Jual"
+            android:layout_gravity="end"
+            app:cornerRadius="@dimen/dimen_8dp"
+            app:fontFamily="@font/noto_sans_bold"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</LinearLayout>

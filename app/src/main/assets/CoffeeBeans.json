@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Bali Kintamani",
+    "price": 2000,
+    "type": 1
+  },
+  {
+    "name": "Bali Net WT. 12oz\"",
+    "price": 2500,
+    "type": 1
+  },
+  {
+    "name": "Sumatera Mandheiling",
+    "price": 2200,
+    "type": 1
+  },
+  {
+    "name": "Robusta Gold",
+    "price": 2000,
+    "type": 1
+  },
+  {
+    "name": "Classic",
+    "price": 1800,
+    "type": 1
+  },
+  {
+    "name": "Arabica Toraja",
+    "price": 2800,
+    "type": 1
+  },
+  {
+    "name": "Matcha Powder",
+    "price": 2300,
+    "type": 1
+  },
+  {
+    "name": "Taro Powder",
+    "price": 2300,
+    "type": 1
+  }
+]

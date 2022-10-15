@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">CoffeTycoon</string>
+
+    <string-array name="locations">
+        <item>Universitas</item>
+        <item>Simpang Tiga</item>
+        <item>Pinggir Stasiun</item>
+        <item>Taman Bermain</item>
+    </string-array>
+
+    <string-array name="weather">
+        <item>Cerah</item>
+        <item>Berawan</item>
+        <item>Hujan</item>
+        <item>Badai</item>
+    </string-array>
 </resources>

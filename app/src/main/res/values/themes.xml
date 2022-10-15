@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.CoffeTycoon" parent="Theme.Material3.Dark.NoActionBar">
+        <style name="Theme.CoffeTycoon" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/disabled_gray</item>
         <item name="colorPrimaryVariant">@color/black_brown</item>

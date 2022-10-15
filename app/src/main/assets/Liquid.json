@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Water",
+    "price": 500,
+    "type": 2
+  },
+  {
+    "name": "Ultra milk original",
+    "price": 4000,
+    "type": 2
+  },
+  {
+    "name": "Ultra milk chocolate",
+    "price": 4000,
+    "type": 2
+  },
+  {
+    "name": "Diamonds milk",
+    "price": 3500,
+    "type": 2
+  },
+  {
+    "name": "Vsoy",
+    "price": 6500,
+    "type": 2
+  },
+  {
+    "name": "Greenfields",
+    "price": 4500,
+    "type": 2
+  },
+  {
+    "name": "Ice",
+    "price": 250,
+    "type": 2
+  }
+]

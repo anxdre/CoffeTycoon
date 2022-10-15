@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         val user = User(
             ti_email.editText!!.text.toString(),
             ti_password.editText!!.text.toString(),
-            0.0
+            500000.0
         )
 
         val task = sharedPrefHelper.saveUser(user)

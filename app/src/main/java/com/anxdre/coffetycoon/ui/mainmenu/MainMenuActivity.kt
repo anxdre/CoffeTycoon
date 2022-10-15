@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.anxdre.coffetycoon.R
 import com.anxdre.coffetycoon.data.User
 import com.anxdre.coffetycoon.ui.auth.LoginActivity
+import com.anxdre.coffetycoon.ui.preparecoffee.PrepareCoffeeActivity
+import com.anxdre.coffetycoon.util.SharedPrefHelper
 import com.anxdre.coffetycoon.util.showLongSnackBar
 import com.anxdre.coffetycoon.util.showSortSnackBar
 import kotlinx.android.synthetic.main.activity_main_menu.*
@@ -13,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 class MainMenuActivity : AppCompatActivity() {
     private var userData: User? = null
@@ -41,5 +44,28 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(Intent(this@MainMenuActivity, LoginActivity::class.java))
             finish()
         }
+
+        btn_sell.setOnClickListener {
+            openPrepareActivity()
+        }
+
+        btn_logout.setOnClickListener {
+            SharedPrefHelper(applicationContext).removeUser()
+            startActivity(Intent(this@MainMenuActivity, LoginActivity::class.java))
+            finish()
+        }
+
+        tv_cash.text = "IDR ${DecimalFormat("#").format(userData?.balance ?: "Undefined")}"
+
     }
+
+    private fun openPrepareActivity() {
+        startActivity(
+            Intent(
+                this@MainMenuActivity,
+                PrepareCoffeeActivity::class.java
+            ).putExtra("user", userData)
+        )
+    }
+
 }

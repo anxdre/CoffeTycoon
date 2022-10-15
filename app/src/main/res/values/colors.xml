@@ -11,4 +11,6 @@
     <color name="brown">#CC9544</color>
     <color name="white">#FFFFFFFF</color>
     <color name="disabled_gray">#CC9E9E9E</color>
+    <color name="danger">#D50000</color>
+    <color name="green">#00C853</color>
 </resources>

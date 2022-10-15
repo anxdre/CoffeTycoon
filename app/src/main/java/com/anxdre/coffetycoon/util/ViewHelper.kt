@@ -3,7 +3,9 @@ package com.anxdre.coffetycoon.util
 import android.content.Context
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.anxdre.coffetycoon.R
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -42,3 +44,6 @@ fun showSortSnackBar(parentView: View, message: String) {
 fun showLongSnackBar(parentView: View, message: String) {
     Snackbar.make(parentView, message, Snackbar.LENGTH_LONG).show()
 }
+
+fun <T> baseSpinnerAdapter(context: Context, listOfData: Array<T>): ArrayAdapter<T> =
+    ArrayAdapter(context, R.layout.layout_simple_spinner_listitem, listOfData)
