@@ -1,6 +1,7 @@
 package com.anxdre.coffetycoon.ui.mainmenu
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.anxdre.coffetycoon.R
@@ -8,6 +9,7 @@ import com.anxdre.coffetycoon.data.User
 import com.anxdre.coffetycoon.ui.auth.LoginActivity
 import com.anxdre.coffetycoon.ui.preparecoffee.PrepareCoffeeActivity
 import com.anxdre.coffetycoon.util.SharedPrefHelper
+import com.anxdre.coffetycoon.util.showAlertConfirmation
 import com.anxdre.coffetycoon.util.showLongSnackBar
 import com.anxdre.coffetycoon.util.showSortSnackBar
 import kotlinx.android.synthetic.main.activity_main_menu.*
@@ -15,16 +17,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 
 class MainMenuActivity : AppCompatActivity() {
-    private var userData: User? = null
+    private lateinit var userData: User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
+        tv_me.setOnClickListener {
+            showSortSnackBar(cl_parent_main, "Love you ...")
+        }
+
+        iv_linkedin.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.linkedin.com/in/anxdre/")))
+        }
+
         try {
-            userData = intent.getSerializableExtra("user") as User
+            userData = SharedPrefHelper(applicationContext).getUser()
             GlobalScope.launch(Dispatchers.IO) {
                 launch(Dispatchers.Main) {
                     showLongSnackBar(
@@ -50,12 +59,14 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         btn_logout.setOnClickListener {
-            SharedPrefHelper(applicationContext).removeUser()
-            startActivity(Intent(this@MainMenuActivity, LoginActivity::class.java))
-            finish()
+            closeStoreConfirm()
         }
 
-        tv_cash.text = "IDR ${DecimalFormat("#").format(userData?.balance ?: "Undefined")}"
+        tv_cash.text = "IDR ${userData.balance}"
+
+        tv_profile.text = userData.username
+
+        tv_dayOfSale.text = userData.dayOfSell.toString()
 
     }
 
@@ -66,6 +77,31 @@ class MainMenuActivity : AppCompatActivity() {
                 PrepareCoffeeActivity::class.java
             ).putExtra("user", userData)
         )
+    }
+
+    private fun closeStoreConfirm() {
+        showAlertConfirmation(
+            context = this,
+            title = "Anda yakin ingin menutup toko ?",
+            message = "Waroeng akan dianggap bangkrut dan dimusnahkan",
+            trueButtonEvent = {
+                SharedPrefHelper(applicationContext).removeUser()
+                startActivity(Intent(this@MainMenuActivity, LoginActivity::class.java))
+                finish()
+            },
+            falseButtonEvent = {
+                it.hide()
+            })
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        SharedPrefHelper(applicationContext).also {
+            userData = it.getUser()
+            tv_dayOfSale.text = userData.dayOfSell.toString()
+            tv_cash.text = "IDR  ${userData.balance}"
+        }
     }
 
 }

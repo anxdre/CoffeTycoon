@@ -6,12 +6,12 @@ import java.text.DecimalFormat
 
 data class Coffee(
     val name: String,
-    private var price: Double = 0.0,
+    private var price: Long = 0,
     val listOfRecipe: MutableList<RecipeItem>
 ) : Serializable {
-    fun getPrice(): Double = price
+    fun getPrice(): Long = price
 
-    fun setPrice(newPrice: Double): Boolean {
+    fun setPrice(newPrice: Long): Boolean {
         val requirePrice = checkMinimumPrice()
         if (newPrice < requirePrice) {
             throw IllegalArgumentException(
@@ -26,8 +26,8 @@ data class Coffee(
         return true
     }
 
-    private fun checkMinimumPrice(): Double {
-        var price: Double = 0.0
+    private fun checkMinimumPrice(): Long {
+        var price: Long = 0
         for (recipe in listOfRecipe) {
             price += (recipe.price * recipe.quantity)
         }

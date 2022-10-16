@@ -27,17 +27,14 @@ class LoginActivity : AppCompatActivity() {
         val user = User(
             ti_email.editText!!.text.toString(),
             ti_password.editText!!.text.toString(),
-            500000.0
+            350000
         )
 
         val task = sharedPrefHelper.saveUser(user)
         if (!task) {
             Toast.makeText(this@LoginActivity, "Buka Toko Gagal", Toast.LENGTH_SHORT).show()
         } else {
-            startActivity(
-                Intent(this@LoginActivity, MainMenuActivity::class.java)
-                    .putExtra("user", user)
-            )
+            startActivity(Intent(this@LoginActivity, MainMenuActivity::class.java))
         }
     }
 

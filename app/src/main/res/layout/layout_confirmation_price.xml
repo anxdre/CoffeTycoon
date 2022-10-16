@@ -9,7 +9,7 @@
     android:padding="@dimen/dimen_32dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv"
+        android:id="@+id/tv_title"
         style="@style/textSmallTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -12,14 +12,11 @@ import com.afollestad.materialdialogs.customview.getCustomView
 import com.anxdre.coffetycoon.R
 import com.anxdre.coffetycoon.data.*
 import com.anxdre.coffetycoon.ui.sellevent.SellEventActivity
-import com.anxdre.coffetycoon.util.baseSpinnerAdapter
-import com.anxdre.coffetycoon.util.showSortSnackBar
-import com.anxdre.coffetycoon.util.showSortToast
+import com.anxdre.coffetycoon.util.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_prepare_coffee.*
 import kotlinx.android.synthetic.main.layout_confirmation_price.view.*
 import kotlinx.android.synthetic.main.layout_item_add_recipe.view.*
-import java.text.DecimalFormat
 
 class PrepareCoffeeActivity : AppCompatActivity() {
     private val weather by lazy { randomizeWeather() }
@@ -55,6 +52,27 @@ class PrepareCoffeeActivity : AppCompatActivity() {
         })
     }
 
+    private fun getRecipeList(): MutableList<RecipeItem> {
+        //read json to string
+        val coffeeJsonString =
+            this.assets.open("CoffeeBeans.json").bufferedReader().use { it.readText() }
+        val liquidJsonString =
+            this.assets.open("Liquid.json").bufferedReader().use { it.readText() }
+        val sugarJsonString = this.assets.open("Sugar.json").bufferedReader().use { it.readText() }
+
+        //create object from string
+        val listOfCoffee = Gson().fromJson(coffeeJsonString, Recipe::class.java)
+        val listOfLiquid = Gson().fromJson(liquidJsonString, Recipe::class.java)
+        val listOfSugar = Gson().fromJson(sugarJsonString, Recipe::class.java)
+
+        //add all of item object to list
+        val listOfItem = mutableListOf<RecipeItem>()
+        listOfItem.addAll(listOfCoffee)
+        listOfItem.addAll(listOfLiquid)
+        listOfItem.addAll(listOfSugar)
+
+        return listOfItem
+    }
 
     private fun randomizeWeather(): Weather {
         //add list of weather data
@@ -127,28 +145,6 @@ class PrepareCoffeeActivity : AppCompatActivity() {
         }
     }
 
-    private fun getRecipeList(): MutableList<RecipeItem> {
-        //read json to string
-        val coffeeJsonString =
-            this.assets.open("CoffeeBeans.json").bufferedReader().use { it.readText() }
-        val liquidJsonString =
-            this.assets.open("Liquid.json").bufferedReader().use { it.readText() }
-        val sugarJsonString = this.assets.open("Sugar.json").bufferedReader().use { it.readText() }
-
-        //create object from string
-        val listOfCoffee = Gson().fromJson(coffeeJsonString, Recipe::class.java)
-        val listOfLiquid = Gson().fromJson(liquidJsonString, Recipe::class.java)
-        val listOfSugar = Gson().fromJson(sugarJsonString, Recipe::class.java)
-
-        //add all of item object to list
-        val listOfItem = mutableListOf<RecipeItem>()
-        listOfItem.addAll(listOfCoffee)
-        listOfItem.addAll(listOfLiquid)
-        listOfItem.addAll(listOfSugar)
-
-        return listOfItem
-    }
-
     private fun validateCoffeeRecipe(): Boolean {
         if (recipeAdapter.getRecipePrice() == 0) {
             showSortSnackBar(findViewById(android.R.id.content), "Resep tidak boleh kosong")
@@ -165,93 +161,107 @@ class PrepareCoffeeActivity : AppCompatActivity() {
         return true
     }
 
-    private fun backConfirmation() {
-        MaterialDialog(this).show {
-            title(text = "Apakah anda ingin keluar ?")
-            message(text = "Hari ini akan dilewati dan data hari ini akan direset")
-            positiveButton(text = "Ya") {
-                finish()
-            }
-            negativeButton(text = "Tidak") {
-                hide()
-            }
-        }
-    }
-
     private fun setCoffeePriceConfirmation() {
-        val dialog = MaterialDialog(this)
-            .customView(R.layout.layout_confirmation_price)
-        dialog.view.setBackgroundColor(Color.TRANSPARENT)
-        dialog.show()
-
-        //define layout
-        val customView = dialog.getCustomView()
-        val tvMessage = customView.tv_message_confirmation
-        val etPrice = customView.et_price_confirmation
-        val btnTrue = customView.btn_continue_confirmation
-        val btnFalse = customView.btn_cancel_confirmation
-
-        //define coffee price
         val coffeeNeed = recipeAdapter.getRecipePrice()
         val totalCoffeePrice = coffeeNeed * et_total_item.text.toString().toInt()
 
-        //define message
-        tvMessage.text = "Kopi anda membutuhkan biaya IDR ${coffeeNeed} / cangkir" +
-                "\ndengan total biaya keseluruhan porsi sebesar IDR ${totalCoffeePrice}"
-
-        btnTrue.setOnClickListener {
-            if (totalCoffeePrice > userdata.balance
-            ) {
-                showSortSnackBar(findViewById(android.R.id.content), "Uang kas anda tidak cukup")
-            } else {
-                dialog.hide()
-                //dual confirmation
-                Coffee(
-                    name = et_name_coffee.text.toString(),
-                    listOfRecipe = recipeAdapter.getRecipeDataset()
-                ).also {
-                    try {
-                        //TODO: BUG AT CONFIRMATION
-                        it.setPrice(et_coffee_price.text.toString().toDouble())
-                        startSellConfirmation(it, et_total_item.text.toString().toInt())
-                    } catch (e: Exception) {
-                        showSortSnackBar(
-                            findViewById(android.R.id.content),
-                            e.message ?: "Something error"
-                        )
+        showAlertConfirmation(
+            context = this,
+            title = "Konfirmasi data penjualan",
+            message = buildString {
+                append("Item kamu membutuhkan biaya IDR $coffeeNeed / pcs")
+                append("\ndengan total biaya keseluruhan item sebesar IDR $totalCoffeePrice")
+            },
+            btnTrueText = "Konfirmasi",
+            inputMode = true,
+            trueButtonEvent = { dialog ->
+                if (totalCoffeePrice > userdata.balance
+                ) {
+                    showSortSnackBar(
+                        findViewById(android.R.id.content),
+                        "Uang kas kamu tidak cukup"
+                    )
+                } else {
+                    //dual confirmation
+                    val coffee = Coffee(
+                        name = et_name_coffee.text.toString(),
+                        listOfRecipe = recipeAdapter.getRecipeDataset()
+                    ).also {
+                        try {
+                            it.setPrice(dialog.view.et_price_confirmation.text.toString().toLong())
+                            startSellConfirmation(it, et_total_item.text.toString().toInt())
+                            dialog.hide()
+                        } catch (e: Exception) {
+                            showSortSnackBar(
+                                findViewById(android.R.id.content),
+                                e.message ?: "Something error"
+                            )
+                        }
                     }
-                }
-            }
-        }
 
-        btnFalse.setOnClickListener {
-            dialog.hide()
-        }
+                }
+            },
+            falseButtonEvent = {
+                it.hide()
+            })
     }
 
     private fun startSellConfirmation(coffee: Coffee, stock: Int) {
-        MaterialDialog(this).show {
-            title(text = "Apakah resep sudah benar ?")
-            message(
-                text = "Kopi ${coffee.name} akan dijual sebanyak $stock seharga ${
-                    DecimalFormat("#").format(
-                        coffee.getPrice()
-                    )
-                }"
-            )
-            positiveButton(text = "Ya") {
+        //define coffee price
+        val coffeeNeed = recipeAdapter.getRecipePrice()
+        showAlertConfirmation(
+            context = this,
+            title = "Konfirmasi data penjualan",
+            message = buildString {
+                append("Item ")
+                append(coffee.name)
+                append(" akan dijual sebanyak ")
+                append(stock)
+                append(" pcs, seharga IDR ")
+                append(coffee.getPrice())
+                append(" / pcs. jual sekarang ?")
+            },
+            btnTrueText = "Jual",
+            trueButtonEvent = {
+                val totalCoffeePrice = coffeeNeed * et_total_item.text.toString().toInt()
+                SharedPrefHelper(applicationContext).updateUserBalance((userdata.balance - totalCoffeePrice))
+
                 val intent = Intent(this@PrepareCoffeeActivity, SellEventActivity::class.java)
+                val locationTresshold:Long = ((sp_location.selectedItemPosition + 10) * 5 * 100).toLong()
                 startActivity(
                     with(intent) {
                         putExtra("coffee", coffee)
                         putExtra("weather", weather)
+                        putExtra("location", locationTresshold)
+                        putExtra("stock", stock)
                     }
                 )
                 finish()
-            }
-            negativeButton(text = "Tidak") {
-                hide()
-            }
+            },
+            falseButtonEvent = {
+                it.hide()
+            })
+    }
+
+    private fun backConfirmation() {
+        showAlertConfirmation(
+            context = this,
+            title = "Kamu yakin ingin keluar ?",
+            message = "Hari ini akan dilewati dan semua data pada hari ini akan direset",
+            trueButtonEvent = {
+                onStop()
+                finish()
+            },
+            falseButtonEvent = {
+                it.hide()
+            })
+    }
+
+    override fun onStop() {
+        super.onStop()
+        SharedPrefHelper(applicationContext).also {
+            val incrementDays = userdata.dayOfSell?.plus(1) ?: 1
+            it.updateUserDay(incrementDays)
         }
     }
 }

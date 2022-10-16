@@ -38,6 +38,27 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun validateRecipe():Boolean{
+        var coffee = false
+        var liquid = false
+        var milk = false
+
+        for (data in dataset){
+            if (data.type == 1){
+                coffee = true
+            }else if (data.type == 2){
+                liquid = true
+            }else{
+                milk = true
+            }
+        }
+
+        if (!milk && !liquid){
+            return false
+        }
+        return true
+    }
+
     private fun removeItemFromRecipe(position: Int) {
         dataset[position].quantity -= 1
     }

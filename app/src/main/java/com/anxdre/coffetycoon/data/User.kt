@@ -6,5 +6,6 @@ import java.io.Serializable
 data class User(
     val username: String,
     val password: String,
-    val balance: Double,
+    val balance: Long,
+    val dayOfSell: Int? = 1,
 ): Serializable

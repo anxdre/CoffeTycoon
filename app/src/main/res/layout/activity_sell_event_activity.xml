@@ -46,7 +46,7 @@
                     android:drawableTint="@color/black"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
-                    android:text="22:00"
+                    android:text="Preparing..."
                     android:textColor="@color/black" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -55,11 +55,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/la_barista"
-                    android:drawableEnd="@drawable/ic_weather_sunny"
                     android:drawablePadding="@dimen/dimen_16dp"
                     android:gravity="center_vertical|end"
                     android:layout_weight="1"
-                    android:text="Sunny"
                     android:textColor="@color/black" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -83,6 +81,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_stop_sell"
             style="@style/textSmallTitle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50dp"

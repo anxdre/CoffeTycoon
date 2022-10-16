@@ -206,28 +206,6 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_14sp"
                     android:textStyle="bold" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_8dp"
-                    android:text="Harga kopi"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_16sp"
-                    app:fontFamily="@font/noto_sans_bold" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_coffee_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Harga Kopi"
-                    android:inputType="number"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:paddingHorizontal="@dimen/dimen_8dp"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_14sp"
-                    android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.google.android.material.card.MaterialCardView>
 

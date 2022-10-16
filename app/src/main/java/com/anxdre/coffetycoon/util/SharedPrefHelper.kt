@@ -11,6 +11,7 @@ class SharedPrefHelper(context: Context) {
             putString("username", user.username)
             putString("password", user.password)
             putLong("balance", user.balance.toLong())
+            putInt("day", user.dayOfSell ?: 1)
         }.commit()
     }
 
@@ -20,13 +21,20 @@ class SharedPrefHelper(context: Context) {
         }.commit()
     }
 
+    fun updateUserDay(day:Int): Boolean {
+        return with(userSharedPref.edit()) {
+            putInt("day", day)
+        }.commit()
+    }
+
     fun getUser(): User {
         val user: User
         with(userSharedPref.edit()) {
             user = User(
                 userSharedPref.getString("username", "")!!,
                 userSharedPref.getString("password", "")!!,
-                userSharedPref.getLong("balance", 0).toDouble()
+                userSharedPref.getLong("balance", 0),
+                userSharedPref.getInt("day", 0)
             )
         }
         return user

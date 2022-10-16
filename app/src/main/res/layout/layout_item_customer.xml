@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_128dp"
+    android:layout_height="@dimen/dimen_100dp"
+    android:layout_marginVertical="@dimen/dimen_8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,6 +13,9 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_customer"
             android:layout_width="128dp"
+            android:background="@color/white"
+            android:padding="@dimen/dimen_16dp"
+            android:src="@drawable/ic_emoji_happy"
             android:layout_height="match_parent" />
 
         <RelativeLayout
@@ -20,7 +24,7 @@
             android:padding="@dimen/dimen_16dp">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_buy_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name"
@@ -32,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2 pcs"
-                android:layout_below="@id/tv_name"
+                android:layout_below="@id/tv_buy_name"
                 android:layout_marginTop="@dimen/dimen_8dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
