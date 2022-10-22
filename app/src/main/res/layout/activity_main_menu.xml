@@ -27,13 +27,13 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_linkedin"
             android:layout_width="48dp"
+            android:layout_height="48dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
-            android:layout_height="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/linkedin_icon_circle"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/linkedin_icon_circle"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_profile"
@@ -55,82 +55,39 @@
             app:layout_constraintStart_toEndOf="@id/iv_profile"
             app:layout_constraintTop_toTopOf="@id/iv_profile" />
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_16dp"
-            android:columnCount="3"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/dimen_16dp"
+            app:cardCornerRadius="@dimen/dimen_8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_detail">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="@dimen/dimen_128dp"
-                android:layout_height="@dimen/dimen_128dp"
-                android:layout_column="0"
-                android:layout_margin="@dimen/dimen_8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                app:cardBackgroundColor="@color/white">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16dp">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/btn_sell"
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/textSmallTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/sp_location"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dimen_8dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_item_coffee" />
-
-                    <TextView
-                        style="@style/textSmallTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Jual Kopi"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btn_logout"
-                android:layout_width="@dimen/dimen_128dp"
-                android:layout_height="@dimen/dimen_128dp"
-                android:layout_column="1"
-                android:layout_margin="@dimen/dimen_8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackground"
-                app:cardBackgroundColor="@color/white">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dimen_8dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_item_close"
-                        android:tint="#E91E63" />
-
-                    <TextView
-                        style="@style/textSmallTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tutup Toko"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </com.google.android.material.card.MaterialCardView>
-        </GridLayout>
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    tools:listitem="@layout/layout_simple_spinner_listitem" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_detail"
@@ -181,9 +138,365 @@
                     android:textStyle="bold"
                     app:fontFamily="@font/noto_sans_bold" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:text="Perkiraan cuaca"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_weather_sunny"
+                    android:drawablePadding="@dimen/dimen_16dp"
+                    android:gravity="center_vertical"
+                    android:text="Cerah"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/noto_sans_bold" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_recipe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_location">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/textSmallTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recipes"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_16dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen_8dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_coffee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="Coffee"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_add_coffee"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/tv_coffee"
+                            android:gravity="center"
+                            android:src="@drawable/ic_up" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_coffee_quantity"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/btn_add_coffee"
+                            android:background="@drawable/bg_curved_outline"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_min_coffee"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/tv_coffee_quantity"
+                            android:gravity="center"
+                            android:src="@drawable/ic_down" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen_8dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_milk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="Milk"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_add_milk"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/tv_milk"
+                            android:gravity="center"
+                            android:src="@drawable/ic_up" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_milk_quantity"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/btn_add_milk"
+                            android:background="@drawable/bg_curved_outline"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_min_milk"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/tv_milk_quantity"
+                            android:gravity="center"
+                            android:src="@drawable/ic_down" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dimen_8dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_water"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="Water"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_add_water"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/tv_water"
+                            android:gravity="center"
+                            android:src="@drawable/ic_up" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_water_quantity"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/btn_add_water"
+                            android:background="@drawable/bg_curved_outline"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/btn_min_water"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_below="@id/tv_water_quantity"
+                            android:gravity="center"
+                            android:src="@drawable/ic_down" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_desc_prepare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sir amit"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_total_cup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_64dp"
+                    android:gravity="center"
+                    android:hint="Total cup"
+                    android:inputType="numberSigned"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16dp"
+                    android:text="Set selling price"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_price_cup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen_64dp"
+                    android:gravity="center"
+                    android:hint="Total cup"
+                    android:inputType="numberSigned"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_cost_warn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/danger"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:textSize="10sp"
+                    android:text="*Selling price must be higher than recipe cost"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_cup_warn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:text="*At least 1 cup of coffee to be sold"
+                    android:textColor="@color/danger"
+                    android:textSize="10sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_cost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:backgroundTint="@color/white"
+            android:padding="@dimen/dimen_16dp"
+            app:cardCornerRadius="@dimen/dimen_8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_recipe">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/textSmallTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Today Cost"
+                    android:textColor="@color/black" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_total_cup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total cup \n @IDR 19.000"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_price_total_cup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="IDR 200.000"
+                        android:textColor="@color/black"
+                        app:fontFamily="@font/noto_sans_bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_location_rent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Location Rent \n@University"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_price_rent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="IDR 200.000"
+                        android:textColor="@color/black"
+                        app:fontFamily="@font/noto_sans_bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_total_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="IDR 200.000"
+                        android:textColor="@color/black"
+                        app:fontFamily="@font/noto_sans_bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_sell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_16dp"
+            android:text="Start Day"
+            app:backgroundTint="@color/green"
+            app:fontFamily="@font/noto_sans_bold"
+            app:layout_constraintBottom_toTopOf="@id/iv_linkedin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_cost" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

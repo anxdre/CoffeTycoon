@@ -9,6 +9,7 @@ import com.anxdre.coffetycoon.R
 import com.anxdre.coffetycoon.data.User
 import com.anxdre.coffetycoon.ui.mainmenu.MainMenuActivity
 import com.anxdre.coffetycoon.util.SharedPrefHelper
+import com.anxdre.coffetycoon.util.showSortToast
 import com.anxdre.coffetycoon.util.viewAnimate
 import com.anxdre.coffetycoon.util.viewVisible
 import kotlinx.android.synthetic.main.activity_login.*
@@ -20,13 +21,16 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         animateOnCreated()
-        btn_login.setOnClickListener { getSignIn() }
+        btn_login.setOnClickListener {
+            if (validateField()) getSignIn() else showSortToast(this,"Data tidak lengkap")
+        }
     }
 
     private fun getSignIn() {
         val user = User(
             ti_email.editText!!.text.toString(),
             ti_password.editText!!.text.toString(),
+            ti_email.editText!!.text.toString(),
             350000
         )
 
@@ -41,12 +45,19 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUser() {
         val user = sharedPrefHelper.getUser()
         if (user.username.isNotBlank()) {
-            startActivity(
-                Intent(this@LoginActivity, MainMenuActivity::class.java)
-                    .putExtra("user", user)
-            )
+            startActivity(Intent(this@LoginActivity, MainMenuActivity::class.java))
             finish()
         }
+    }
+
+    private fun validateField(): Boolean {
+        if (ti_email.editText!!.text.isNullOrBlank()) {
+            return false
+        }
+        if (ti_password.editText!!.text.isNullOrBlank()) {
+            return false
+        }
+        return true
     }
 
     private fun animateOnCreated() {

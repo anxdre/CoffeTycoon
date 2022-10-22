@@ -2,10 +2,9 @@
     <string name="app_name">CoffeTycoon</string>
 
     <string-array name="locations">
-        <item>Taman Bermain</item>
-        <item>Pinggir Stasiun</item>
         <item>Universitas</item>
-        <item>Simpang Tiga</item>
+        <item>Bussines district</item>
+        <item>Beach</item>
     </string-array>
 
     <string-array name="weather">

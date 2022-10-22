@@ -10,6 +10,7 @@ class SharedPrefHelper(context: Context) {
         return with(userSharedPref.edit()) {
             putString("username", user.username)
             putString("password", user.password)
+            putString("playerName", user.playerName)
             putLong("balance", user.balance.toLong())
             putInt("day", user.dayOfSell ?: 1)
         }.commit()
@@ -33,6 +34,7 @@ class SharedPrefHelper(context: Context) {
             user = User(
                 userSharedPref.getString("username", "")!!,
                 userSharedPref.getString("password", "")!!,
+                userSharedPref.getString("playerName", "")!!,
                 userSharedPref.getLong("balance", 0),
                 userSharedPref.getInt("day", 0)
             )
@@ -44,7 +46,9 @@ class SharedPrefHelper(context: Context) {
         return with(userSharedPref.edit()) {
             remove("username")
             remove("password")
+            remove("playerName")
             remove("balance")
+            remove("day")
         }.commit()
     }
 }
