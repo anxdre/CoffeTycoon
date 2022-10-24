@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.anxdre.coffetycoon.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_confirmation_price.view.*
@@ -125,3 +126,6 @@ fun showAlert(
         btnTrueEvent(dialog)
     }
 }
+
+
+

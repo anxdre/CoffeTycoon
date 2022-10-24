@@ -7,13 +7,14 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
 import com.anxdre.coffetycoon.R
-import com.anxdre.coffetycoon.data.LocationRent
-import com.anxdre.coffetycoon.data.Product
-import com.anxdre.coffetycoon.data.User
+import com.anxdre.coffetycoon.data.*
 import com.anxdre.coffetycoon.ui.auth.LoginActivity
+import com.anxdre.coffetycoon.ui.sellevent.SellEventActivity
 import com.anxdre.coffetycoon.util.*
 import kotlinx.android.synthetic.main.activity_main_menu.*
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +24,15 @@ import kotlinx.coroutines.launch
 
 class MainMenuActivity : AppCompatActivity() {
     private lateinit var userData: User
-    private val listOfRecipeItem = mutableListOf<Product>()
+    private val sharedPrefHelper by lazy { SharedPrefHelper(applicationContext) }
     private val listOfLocation by lazy { prepareDataLocation() }
+    private val weather by lazy {
+        randomizeWeather(
+            applicationContext,
+            getListOfWeather(applicationContext)
+        )
+    }
+    private val listOfRecipeItem = mutableListOf<Product>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +50,12 @@ class MainMenuActivity : AppCompatActivity() {
             startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.linkedin.com/in/anxdre/")))
         }
 
+        tv_weather.text = weather.name
+
+        tv_weather.setCompoundDrawablesWithIntrinsicBounds(
+            null, null, ContextCompat.getDrawable(this, weather.bgIcon), null
+        )
+
         tv_cash.text = "IDR ${userData.balance}"
 
         tv_profile.text = userData.username
@@ -52,10 +66,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         sp_location.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 sellingValidation()
             }
@@ -111,22 +122,64 @@ class MainMenuActivity : AppCompatActivity() {
         et_total_cup.doOnTextChanged { text, start, before, count ->
             sellingValidation()
         }
+
+        btn_logout.setOnClickListener { logoutUser() }
+
+        btn_start_sell.setOnClickListener {
+            if ((calculateTotalRecipeCost() * et_total_cup.text.toString()
+                    .toInt()) + listOfLocation[sp_location.selectedItemPosition].price > userData.balance
+            ) {
+                showSortSnackBar(cl_parent_main, "Not enough balance to pay the cost of coffee")
+            } else {
+                val dayOfSell = DayOfSell(
+                    tv_dayOfSale.text.toString().toInt(),
+                    weather,
+                    listOfLocation[sp_location.selectedItemPosition],
+                    et_total_cup.text.toString().toInt(),
+                    et_price_cup.text.toString().toLong(),
+                    calculateTotalRecipeCost()
+                )
+
+                showAlertConfirmation(context = this,
+                    title = "Konfirmasi data penjualan",
+                    message = buildString {
+                        append("Kopi")
+                        append(" akan dijual sebanyak ")
+                        append(dayOfSell.stock)
+                        append("pcs, seharga IDR ")
+                        append(dayOfSell.sellPrice)
+                        append(" / pcs. \njual sekarang ?")
+                    },
+                    trueButtonEvent = {
+                        startActivity(
+                            Intent(this, SellEventActivity::class.java).putExtra(
+                                "dayOfSell",
+                                dayOfSell
+                            )
+                        )
+                        it.dismiss()
+                        finish()
+                    },
+                    falseButtonEvent = {
+                        it.dismiss()
+                    })
+            }
+
+        }
     }
 
     private fun sellingValidation() {
         if (validateField()) {
             btn_start_sell.isEnabled = true
             showAllCost(
-                et_total_cup.text.toString().toInt(),
-                sp_location.selectedItemPosition
+                et_total_cup.text.toString().toInt(), sp_location.selectedItemPosition
             )
         } else {
             viewVisible(tv_cost_warn)
             viewVisible(tv_cup_warn)
             btn_start_sell.isEnabled = false
             showAllCost(
-                0,
-                sp_location.selectedItemPosition
+                0, sp_location.selectedItemPosition
             )
         }
     }
@@ -149,7 +202,6 @@ class MainMenuActivity : AppCompatActivity() {
                 Product("Milk", 100),
                 Product("Water", 200)
             )
-
         )
     }
 
@@ -166,19 +218,24 @@ class MainMenuActivity : AppCompatActivity() {
 
     private fun prepareAccount() {
         try {
-            userData = SharedPrefHelper(applicationContext).getUser()
-            GlobalScope.launch(Dispatchers.IO) {
-                launch(Dispatchers.Main) {
-                    showLongSnackBar(
-                        cl_parent_main, "Selamat datang ${userData!!.username}"
-                    )
-                }
-                delay(4000)
-                launch(Dispatchers.Main) {
-                    showLongSnackBar(cl_parent_main, "Semoga hari ini laris maris ya...")
-                }
+            userData = sharedPrefHelper.getUser()
+            if (isUserBalanceEnough()) {
+                GlobalScope.launch(Dispatchers.IO) {
+                    launch(Dispatchers.Main) {
+                        showLongSnackBar(
+                            cl_parent_main, "Selamat datang ${userData!!.username}"
+                        )
+                    }
+                    delay(4000)
+                    launch(Dispatchers.Main) {
+                        showLongSnackBar(cl_parent_main, "Semoga hari ini laris maris ya...")
+                    }
 
+                }
+            } else {
+                gameOverScreen()
             }
+
 
         } catch (e: Exception) {
             showSortSnackBar(cl_parent_main, "Toko tidak ditemukan silahkan login ulang")
@@ -239,13 +296,34 @@ class MainMenuActivity : AppCompatActivity() {
             trueButtonEvent = {
                 SharedPrefHelper(applicationContext).removeUser()
                 startActivity(Intent(this@MainMenuActivity, LoginActivity::class.java))
+                it.dismiss()
                 finish()
             },
             falseButtonEvent = {
-                it.hide()
+                it.dismiss()
             })
     }
 
+    private fun gameOverScreen() {
+        MaterialDialog(this).show {
+            title(text = "Game Over")
+            message(text = "Waroeng anda bangkrut dan tidak dapat melanjutkan permainan :(")
+            positiveButton(text = "Keluar") {
+                sharedPrefHelper.removeUser()
+                startActivity(Intent(this@MainMenuActivity, LoginActivity::class.java))
+                finish()
+            }
+            cancelable(false)
+            cancelOnTouchOutside(false)
+        }
+    }
+
+    private fun isUserBalanceEnough(): Boolean {
+        if (userData.balance < 800) {
+            return false
+        }
+        return true
+    }
 
     override fun onResume() {
         super.onResume()
