@@ -1,10 +1,12 @@
 package com.anxdre.coffetycoon.ui.sellevent
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -105,7 +107,7 @@ class SellEventActivity : AppCompatActivity(), CoroutineScope {
             val customerItemPurchase = Random.nextInt(1, 10)
 
             if (checkServedOrNot(customerItemPurchase, stock)) {
-                stock =- customerItemPurchase
+                stock -= customerItemPurchase
                 custAdapter.addCustomer(
                     Customer(
                         customerName,
@@ -176,6 +178,10 @@ class SellEventActivity : AppCompatActivity(), CoroutineScope {
         itemView.rv_customer_resume.adapter = custAdapter
         itemView.tv_total_cust_served.text = "${dayOfSell.resumeOfTheDay.totalCustServed} Cust"
         itemView.tv_total_cust_unserved.text = "${dayOfSell.resumeOfTheDay.totalCustUnserved} Cust"
+
+        if ((dayOfSell.resumeOfTheDay.totalEarnings - costOfTheDay) <= 0){
+            itemView.bg_profit.background = AppCompatResources.getDrawable(this,R.color.danger)
+        }
 
         itemView.tv_profit_day.text = "IDR ${dayOfSell.resumeOfTheDay.totalEarnings - costOfTheDay}"
 
