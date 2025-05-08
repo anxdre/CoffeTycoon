@@ -2,6 +2,7 @@ package com.anxdre.coffetycoon.ui.sellevent
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -104,7 +105,7 @@ class SellEventActivity : AppCompatActivity(), CoroutineScope {
             val customerItemPurchase = Random.nextInt(1, 10)
 
             if (checkServedOrNot(customerItemPurchase, stock)) {
-                stock -= customerItemPurchase
+                stock =- customerItemPurchase
                 custAdapter.addCustomer(
                     Customer(
                         customerName,
@@ -117,7 +118,7 @@ class SellEventActivity : AppCompatActivity(), CoroutineScope {
                     Customer(
                         customerName,
                         customerItemPurchase,
-                        true
+                        false
                     )
                 )
             }

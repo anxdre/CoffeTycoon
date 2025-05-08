@@ -188,10 +188,10 @@ class MainMenuActivity : AppCompatActivity() {
     private fun addQuantity(value: Int): Int = value + 1
 
     private fun minQuantity(value: Int): Int {
-        return if (value > 1) {
+        return if (value >= 1) {
             value - 1
         } else {
-            1
+            0
         }
     }
 
